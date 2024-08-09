@@ -29,7 +29,7 @@ function App() {
       <div>
       <Header />
       <MainContent />
-      <UserProfile name="John" age="30" bio="Loves watching and traveling" />
+      <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
       <Footer />
       </div>
 
