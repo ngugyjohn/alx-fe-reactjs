@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import UserProfile from './components/UserProfile'
 import Header from './components/Header'
 import MainContent from './components/MainContent'
 import Footer from './components/Footer'
@@ -28,6 +29,7 @@ function App() {
       <div>
       <Header />
       <MainContent />
+      <UserProfile name="John" age="30" bio="Loves watching and traveling" />
       <Footer />
       </div>
 
