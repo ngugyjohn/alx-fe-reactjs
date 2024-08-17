@@ -3,7 +3,7 @@ import Home from './Home';
 import About from './About';
 import Services from './Services';
 import Contact from './Contact';
-import Navbar from './Navbar'; // Add the Navbar
+import Navbar from './assets/components/Navbar'; // Add the Navbar
 
 function App() {
   return (
