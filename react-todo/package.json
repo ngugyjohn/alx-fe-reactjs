@@ -7,14 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"  // Ensure this is only defined once
   },
-
-  "scripts": {
-  "test": "jest"
-  },
-
-
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
