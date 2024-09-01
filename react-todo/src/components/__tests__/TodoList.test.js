@@ -28,7 +28,6 @@ test('toggles todo completion', () => {
 
 test('deletes a todo', () => {
   render(<TodoList />);
-  const todo = screen.getByText(/learn react/i);
   fireEvent.click(screen.getByText(/delete/i));
-  expect(todo).not.toBeInTheDocument();
+  expect(screen.queryByText(/learn react/i)).not.toBeInTheDocument();
 });
