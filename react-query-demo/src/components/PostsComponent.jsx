@@ -6,10 +6,10 @@ function fetchPosts() {
 }
 
 function PostsComponent() {
-  const { data, isError, isLoading, refetch } = useQuery('posts', fetchPosts);
+  const { data, error, isLoading, refetch } = useQuery('posts', fetchPosts);
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading posts</div>;  // Ensure this line includes "isError"
+  if (error) return <div>Error: {error.message}</div>;  // Ensure this line includes "error"
 
   return (
     <div>
