@@ -9,6 +9,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Profile from './components/Profile';
 import BlogPost from './components/BlogPost';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,13 +22,13 @@ function App() {
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/profile">Profile</Link>
-        <Link to="/blog/1">Blog Post 1</Link> {/* Example link to a dynamic route */}
+        <Link to="/blog/1">Blog Post 1</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:id" element={<BlogPost />} /> {/* Dynamic Route */}
+        <Route path="/profile/*" element={<ProtectedRoute element={<Profile />} />} /> {/* Protected Route */}
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </Router>
 
