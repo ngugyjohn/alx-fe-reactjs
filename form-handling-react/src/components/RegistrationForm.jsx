@@ -35,7 +35,7 @@ function RegistrationForm() {
           <input
             type="text"
             name="username"
-            value={formData.username}  // Controlled input
+            value={formData.username}  // Ensure this line is exactly like this
             onChange={handleChange}
             style={{ display: 'block', margin: '10px 0' }}
           />
@@ -45,7 +45,7 @@ function RegistrationForm() {
           <input
             type="email"
             name="email"
-            value={formData.email}  // Controlled input
+            value={formData.email}  // Ensure this line is exactly like this
             onChange={handleChange}
             style={{ display: 'block', margin: '10px 0' }}
           />
@@ -55,7 +55,7 @@ function RegistrationForm() {
           <input
             type="password"
             name="password"
-            value={formData.password}  // Controlled input
+            value={formData.password}  // Ensure this line is exactly like this
             onChange={handleChange}
             style={{ display: 'block', margin: '10px 0' }}
           />
