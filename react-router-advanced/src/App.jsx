@@ -6,8 +6,9 @@ import './App.css'
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
-import Profile from './components/Profile.jsx';
 import About from './components/About';
+import Profile from './components/Profile';
+import BlogPost from './components/BlogPost';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,16 +16,18 @@ function App() {
   return (
     <>
 
-    <Router>
+<Router>
       <nav>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/profile">Profile</Link>
+        <Link to="/blog/1">Blog Post 1</Link> {/* Example link to a dynamic route */}
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile/*" element={<Profile />} />
+        <Route path="/blog/:id" element={<BlogPost />} /> {/* Dynamic Route */}
       </Routes>
     </Router>
 
