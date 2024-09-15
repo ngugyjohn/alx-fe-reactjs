@@ -7,24 +7,29 @@ function AddRecipeForm() {
   const [steps, setSteps] = useState('');
   const [errors, setErrors] = useState({});
 
+  // Function to validate input fields
+  const validate = () => {
+    const validationErrors = {};
+    if (!title) validationErrors.title = 'Title is required';
+    if (!ingredients) validationErrors.ingredients = 'Ingredients are required';
+    if (ingredients.split('\n').length < 2) {
+      validationErrors.ingredients = 'At least two ingredients are required';
+    }
+    if (!steps) validationErrors.steps = 'Preparation steps are required';
+    return validationErrors;
+  };
+
   // Form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    const validationErrors = {};
-    if (!title) validationErrors.title = 'Title is required';
-    if (!ingredients) validationErrors.ingredients = 'Ingredients are required';
-    if (ingredients.split('\n').length < 2)
-      validationErrors.ingredients = 'At least two ingredients are required';
-    if (!steps) validationErrors.steps = 'Preparation steps are required';
-
+    const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    // Submit form data (this could be connected to an API or database)
+    // Submit form data (you would send the data to an API or database)
     const recipeData = { title, ingredients, steps };
     console.log('New Recipe:', recipeData);
 
