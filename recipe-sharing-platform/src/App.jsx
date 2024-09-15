@@ -7,6 +7,9 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RecipeDetail from './components/RecipeDetail';
 
+import React from 'react';
+import AddRecipeForm from './components/AddRecipeForm';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -24,6 +27,10 @@ function App() {
         <Route path="/recipe/:id" element={<RecipeDetail />} />
       </Routes>
     </Router>
+
+    <div className="App">
+      <AddRecipeForm />
+    </div>
 
       <div>
         <a href="https://vitejs.dev" target="_blank">
