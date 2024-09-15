@@ -13,6 +13,13 @@ function App() {
       <h1>Welcome to the Recipe Sharing Platform!</h1>
     </div>
 
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/recipe/:id" element={<RecipeDetail />} />
+      </Routes>
+    </Router>
+
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
