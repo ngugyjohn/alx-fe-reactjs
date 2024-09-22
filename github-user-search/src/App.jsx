@@ -1,12 +1,8 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
 import Search from './components/Search';
 import { fetchUserData } from './services/githubService';
 
 function App() {
-  const [count, setCount] = useState(0);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -14,7 +10,7 @@ function App() {
   const handleSearch = async (username) => {
     setLoading(true);
     setError('');
-    setUserData(null);
+    setUserData(null); // Reset user data before fetching
 
     try {
       const data = await fetchUserData(username);
@@ -27,49 +23,29 @@ function App() {
   };
 
   return (
-    <>
-      {/* Existing Vite and React Logos */}
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React + GitHub User Search</h1>
+    <div className="App">
+      <h1>GitHub User Search</h1>
 
-      {/* GitHub User Search Section */}
-      <div className="card">
-        <Search onSearch={handleSearch} />
-        
-        {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        {userData && (
-          <div className="user-profile">
-            <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} className="avatar" />
-            <h2>{userData.login}</h2>
-            <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-              View Profile
-            </a>
-          </div>
-        )}
-      </div>
+      {/* Search Form */}
+      <Search onSearch={handleSearch} />
 
-      {/* Existing Count Button */}
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
+      {/* Loading State */}
+      {loading && <p>Loading...</p>}
 
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      {/* Error State */}
+      {error && <p>{error}</p>}
+
+      {/* Display User Data */}
+      {userData && (
+        <div className="user-details">
+          <img src={userData.avatar_url} alt="User Avatar" className="avatar" />
+          <h2>{userData.login}</h2>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
+        </div>
+      )}
+    </div>
   );
 }
 

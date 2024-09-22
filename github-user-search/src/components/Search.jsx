@@ -9,21 +9,20 @@ function Search({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim()) {
       onSearch(searchTerm);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={handleInputChange}
-        placeholder="Search GitHub Username"
-        className="search-input"
+      <input 
+        type="text" 
+        value={searchTerm} 
+        onChange={handleInputChange} 
+        placeholder="Search GitHub Username" 
       />
-      <button type="submit" className="search-button">Search</button>
+      <button type="submit">Search</button>
     </form>
   );
 }
