@@ -3,10 +3,12 @@ import { useState } from 'react';
 function Search({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Update the search term in state
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // Submit the search term when the form is submitted
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -20,7 +22,7 @@ function Search({ onSearch }) {
         type="text" 
         value={searchTerm} 
         onChange={handleInputChange} 
-        placeholder="Search GitHub Username" 
+        placeholder="Enter GitHub Username" 
       />
       <button type="submit">Search</button>
     </form>

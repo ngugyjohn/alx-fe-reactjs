@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import Search from './components/Search';
-import { fetchUserData } from './services/githubService';
+import Search from './components/Search';  // Import the Search component
+import { fetchUserData } from './services/githubService';  // API call logic
 
 function App() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Handle the search process
   const handleSearch = async (username) => {
     setLoading(true);
     setError('');
-    setUserData(null); // Reset user data before fetching
+    setUserData(null);  // Reset user data when a new search starts
 
     try {
       const data = await fetchUserData(username);
@@ -26,22 +27,22 @@ function App() {
     <div className="App">
       <h1>GitHub User Search</h1>
 
-      {/* Search Form */}
+      {/* Render the Search form */}
       <Search onSearch={handleSearch} />
 
-      {/* Loading State */}
+      {/* Render loading message */}
       {loading && <p>Loading...</p>}
 
-      {/* Error State */}
+      {/* Render error message if user is not found */}
       {error && <p>{error}</p>}
 
-      {/* Display User Data */}
+      {/* Render user data if available */}
       {userData && (
-        <div className="user-details">
+        <div className="user-info">
           <img src={userData.avatar_url} alt="User Avatar" className="avatar" />
           <h2>{userData.login}</h2>
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
-            View Profile
+            View GitHub Profile
           </a>
         </div>
       )}
