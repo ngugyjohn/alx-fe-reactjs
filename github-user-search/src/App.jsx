@@ -47,7 +47,7 @@ function App() {
         {error && <p>{error}</p>}
         {userData && (
           <div className="user-profile">
-            <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} />
+            <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} className="avatar" />
             <h2>{userData.login}</h2>
             <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
               View Profile
