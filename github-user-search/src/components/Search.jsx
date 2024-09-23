@@ -1,31 +1,50 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-function Search({ onSearch }) {
-  const [searchTerm, setSearchTerm] = useState('');
+function Search() {
+  const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Update the search term in state
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Submit the search term when the form is submitted
-  const handleSubmit = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (searchTerm.trim()) {
-      onSearch(searchTerm);
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.get(`https://api.github.com/users/${username}`);
+      setUserData(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError("Looks like we cant find the user");
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={searchTerm} 
-        onChange={handleInputChange} 
-        placeholder="Enter GitHub Username" 
-      />
-      <button type="submit">Search</button>
-    </form>
+    <div>
+      <form onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Search GitHub username"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
+
+      {error && <p>{error}</p>}
+
+      {userData && (
+        <div>
+          <img src={userData.avatar_url} alt="User Avatar" />
+          <h2>{userData.login}</h2>
+          <a href={userData.html_url}>View GitHub Profile</a>
+        </div>
+      )}
+    </div>
   );
 }
 
