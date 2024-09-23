@@ -7,8 +7,8 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  // Define the fetchUserData function
+  const fetchUserData = async (username) => {
     setLoading(true);
     setError('');
     try {
@@ -16,8 +16,16 @@ function Search() {
       setUserData(response.data);
       setLoading(false);
     } catch (err) {
-      setError("Looks like we cant find the user");
+      setError("Looks like we can't find the user");
       setLoading(false);
+    }
+  };
+
+  // Handle form submission
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (username) {
+      fetchUserData(username);
     }
   };
 
@@ -41,7 +49,9 @@ function Search() {
         <div>
           <img src={userData.avatar_url} alt="User Avatar" />
           <h2>{userData.login}</h2>
-          <a href={userData.html_url}>View GitHub Profile</a>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View GitHub Profile
+          </a>
         </div>
       )}
     </div>
