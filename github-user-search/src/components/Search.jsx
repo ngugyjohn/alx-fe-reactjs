@@ -11,6 +11,7 @@ const Search = () => {
     e.preventDefault();
     setLoading(true);
     setError(false);
+    setUserData(null); // Clear previous data before new search
     try {
       const data = await fetchUserData(username);
       setUserData(data);
@@ -33,13 +34,20 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
+      {/* Loading state */}
       {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can't find the user.</p>}
+
+      {/* Error handling */}
+      {error && !loading && <p>Looks like we can't find the user.</p>}
+
+      {/* Displaying the user data */}
       {userData && (
         <div>
           <img src={userData.avatar_url} alt={userData.login} />
           <p>{userData.login}</p>
-          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">View Profile</a>
+          <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+            View Profile
+          </a>
         </div>
       )}
     </div>
