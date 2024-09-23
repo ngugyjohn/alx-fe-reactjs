@@ -10,19 +10,19 @@ function Search() {
   // Function to fetch user data from GitHub API
   const fetchUserData = async (username) => {
     setLoading(true);
-    setError('');
-    setUserData(null);  // Reset user data for each new search
+    setError('');  // Reset error on every search attempt
+    setUserData(null);  // Reset previous user data
     try {
       const response = await axios.get(`https://api.github.com/users/${username}`);
       setUserData(response.data);
     } catch (err) {
-      setError("Looks like we can't find the user");  // Set error message
+      setError("Looks like we can't find the user");  // Set error message when user is not found
     } finally {
       setLoading(false);
     }
   };
 
-  // Handling the form submission
+  // Handle form submission
   const handleSearch = (e) => {
     e.preventDefault();
     if (username) {
@@ -43,10 +43,13 @@ function Search() {
         <button type="submit" className="search-button">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>}  {/* Handle loading state */}
+      {/* Display loading message */}
+      {loading && <p>Loading...</p>} 
 
-      {error && <p>{error}</p>}  {/* Display error message */}
+      {/* Display error message */}
+      {error && <p>{error}</p>}  
 
+      {/* Display user data if found */}
       {userData && (
         <div className="user-details">
           <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} className="user-avatar" />
