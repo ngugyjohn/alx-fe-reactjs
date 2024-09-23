@@ -16,7 +16,7 @@ function Search() {
       const response = await axios.get(`https://api.github.com/users/${username}`);
       setUserData(response.data);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we can't find the user");  // Set error message
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ function Search() {
 
       {loading && <p>Loading...</p>}  {/* Handle loading state */}
 
-      {error && <p>{error}</p>}  {/* Display the error message */}
+      {error && <p>{error}</p>}  {/* Display error message */}
 
       {userData && (
         <div className="user-details">
