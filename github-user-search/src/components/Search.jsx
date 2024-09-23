@@ -16,7 +16,7 @@ function Search() {
       setUserData(response.data);
       setLoading(false);
     } catch (err) {
-      setError("Looks like we can't find the user");
+      setError("Looks like we can't find the user"); // The required error message
       setLoading(false);
     }
   };
@@ -43,7 +43,7 @@ function Search() {
 
       {loading && <p>Loading...</p>}
 
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} {/* This will display "Looks like we can't find the user" */}
 
       {userData && (
         <div>
