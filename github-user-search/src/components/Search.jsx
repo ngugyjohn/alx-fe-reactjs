@@ -7,21 +7,22 @@ function Search() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Define the fetchUserData function
+  // Function to fetch user data from GitHub API
   const fetchUserData = async (username) => {
     setLoading(true);
     setError('');
+    setUserData(null);  // Reset user data for each new search
     try {
       const response = await axios.get(`https://api.github.com/users/${username}`);
       setUserData(response.data);
-      setLoading(false);
     } catch (err) {
-      setError("Looks like we can't find the user"); // The required error message
+      setError("Looks like we can't find the user");
+    } finally {
       setLoading(false);
     }
   };
 
-  // Handle form submission
+  // Handling the form submission
   const handleSearch = (e) => {
     e.preventDefault();
     if (username) {
@@ -30,24 +31,25 @@ function Search() {
   };
 
   return (
-    <div>
+    <div className="search-container">
       <form onSubmit={handleSearch}>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Search GitHub username"
+          placeholder="Enter GitHub username"
+          className="search-input"
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="search-button">Search</button>
       </form>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p>Loading...</p>}  {/* Handle loading state */}
 
-      {error && <p>{error}</p>} {/* This will display "Looks like we can't find the user" */}
+      {error && <p>{error}</p>}  {/* Display the error message */}
 
       {userData && (
-        <div>
-          <img src={userData.avatar_url} alt="User Avatar" />
+        <div className="user-details">
+          <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} className="user-avatar" />
           <h2>{userData.login}</h2>
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View GitHub Profile
