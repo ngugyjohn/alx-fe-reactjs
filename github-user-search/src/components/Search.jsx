@@ -7,23 +7,26 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // Handle the form submission and API request
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(false);
-    setUserData(null); // Clear previous data before new search
+    setLoading(true); // Set loading to true before making the API call
+    setError(false);  // Reset error state before making a new request
+    setUserData(null); // Clear previous user data
+
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
+      setUserData(data); // Set user data if API call is successful
     } catch (err) {
-      setError(true);
+      setError(true);  // Set error state if API call fails
     } finally {
-      setLoading(false);
+      setLoading(false); // Always set loading to false when done
     }
   };
 
   return (
-    <div>
+    <div className="search-container">
+      {/* Form for user input */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -34,17 +37,15 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {/* Loading state */}
-      {loading && <p>Loading...</p>}
+      {/* Conditional Rendering */}
+      {loading && <p>Loading...</p>}  {/* Display Loading when request is being processed */}
 
-      {/* Error handling */}
-      {error && !loading && <p>Looks like we can't find the user.</p>}
+      {error && <p>Looks like we can't find the user</p>}  {/* Display Error if request fails */}
 
-      {/* Displaying the user data */}
-      {userData && (
+      {userData && (  {/* Display user data once successfully fetched */}
         <div>
-          <img src={userData.avatar_url} alt={userData.login} />
-          <p>{userData.login}</p>
+          <img src={userData.avatar_url} alt={userData.login} />  {/* Avatar */}
+          <p>{userData.login}</p>  {/* Username */}
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View Profile
           </a>
