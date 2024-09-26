@@ -4,7 +4,7 @@ import { fetchUserData } from '../services/githubService';
 function Search() {
     const [username, setUsername] = useState('');
     const [location, setLocation] = useState('');
-    const [repos, setRepos] = useState(0);
+    const [minRepos, setMinRepos] = useState(0);
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState(null);
     const [error, setError] = useState('');
@@ -14,7 +14,7 @@ function Search() {
         setLoading(true);
         setError('');
         try {
-            const data = await fetchUserData(username, location, repos);
+            const data = await fetchUserData(username, location, minRepos);
             setUserData(data.items); // GitHub search returns items array
         } catch (err) {
             setError('Looks like we can’t find the user');
@@ -41,8 +41,8 @@ function Search() {
                 />
                 <input
                     type="number"
-                    value={repos}
-                    onChange={(e) => setRepos(e.target.value)}
+                    value={minRepos}
+                    onChange={(e) => setMinRepos(e.target.value)}
                     placeholder="Minimum Repositories"
                 />
                 <button type="submit">Search</button>
@@ -56,10 +56,9 @@ function Search() {
                     {userData.map((user) => (
                         <div key={user.id}>
                             <img src={user.avatar_url} alt={user.login} />
+                            <p>{user.login}</p>
                             <p>Location: {user.location || 'Not specified'}</p>
                             <p>Public Repositories: {user.public_repos}</p>
-
-                            <p>{user.login}</p>
                             <a href={user.html_url} target="_blank" rel="noopener noreferrer">
                                 Visit Profile
                             </a>
