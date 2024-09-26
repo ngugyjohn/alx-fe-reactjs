@@ -1,92 +1,74 @@
 import React, { useState } from 'react';
-import { fetchAdvancedUserData } from '../services/githubService';
+import { fetchUserData } from '../services/githubService';
 
-const Search = () => {
-  const [username, setUsername] = useState('');
-  const [location, setLocation] = useState('');
-  const [minRepos, setMinRepos] = useState('');
-  const [userData, setUserData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+function Search() {
+    const [username, setUsername] = useState('');
+    const [location, setLocation] = useState('');
+    const [repos, setRepos] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [error, setError] = useState('');
 
-  // Handle the form submission and API request
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);  // Set loading state to true before making the API call
-    setError(false);   // Reset the error state before making a new request
-    setUserData([]); // Clear previous user data
+    const handleSearch = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        try {
+            const data = await fetchUserData(username, location, repos);
+            setUserData(data.items); // GitHub search returns items array
+        } catch (err) {
+            setError('Looks like we can’t find the user');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    try {
-      const data = await fetchAdvancedUserData({ username, location, minRepos });
-      setUserData(data.items); // Set user data if API call is successful
-    } catch (err) {
-      setError(true);  // Set error state if API call fails
-    } finally {
-      setLoading(false); // Always set loading to false when done
-    }
-  };
-
-  return (
-    <div className="search-container p-6 max-w-lg mx-auto">
-      {/* Form for user input */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+    return (
         <div>
-          <label className="block">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter GitHub username"
-            className="border p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block">Location</label>
-          <input
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter location"
-            className="border p-2 w-full"
-          />
-        </div>
-        <div>
-          <label className="block">Minimum Repositories</label>
-          <input
-            type="number"
-            value={minRepos}
-            onChange={(e) => setMinRepos(e.target.value)}
-            placeholder="Enter minimum repositories"
-            className="border p-2 w-full"
-          />
-        </div>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
-          Search
-        </button>
-      </form>
+            <form onSubmit={handleSearch}>
+                <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="GitHub Username"
+                    required
+                />
+                <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Location"
+                />
+                <input
+                    type="number"
+                    value={repos}
+                    onChange={(e) => setRepos(e.target.value)}
+                    placeholder="Minimum Repositories"
+                />
+                <button type="submit">Search</button>
+            </form>
 
-      {/* Conditional Rendering */}
-      {loading && <p>Loading...</p>}  {/* Display Loading when request is in progress */}
-      {error && <p>Looks like we can't find the user</p>}  {/* Error message */}
+            {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            
+            {userData && (
+                <div>
+                    {userData.map((user) => (
+                        <div key={user.id}>
+                            <img src={user.avatar_url} alt={user.login} />
+                            <p>Location: {user.location || 'Not specified'}</p>
+                            <p>Public Repositories: {user.public_repos}</p>
 
-      {/* Displaying search results */}
-      {userData.length > 0 && (
-        <div className="mt-6 space-y-4">
-          {userData.map((user) => (
-            <div key={user.id} className="border p-4 rounded shadow-md">
-              <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
-              <p>{user.login}</p>
-              {user.location && <p>Location: {user.location}</p>}
-              <p>Repositories: {user.public_repos}</p>
-              <a href={user.html_url} target="_blank" rel="noopener noreferrer">
-                View Profile
-              </a>
-            </div>
-          ))}
+                            <p>{user.login}</p>
+                            <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                                Visit Profile
+                            </a>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
-};
+    );
+}
 
 export default Search;
