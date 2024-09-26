@@ -10,8 +10,8 @@ const Search = () => {
   // Handle the form submission and API request
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true before making the API call
-    setError(false);  // Reset error state before making a new request
+    setLoading(true);  // Set loading state to true before making the API call
+    setError(false);   // Reset the error state before making a new request
     setUserData(null); // Clear previous user data
 
     try {
@@ -38,13 +38,13 @@ const Search = () => {
       </form>
 
       {/* Conditional Rendering */}
-      {loading && <p>Loading...</p>}  {/* Display Loading when request is being processed */}
+      {loading && <p>Loading...</p>}  {/* Display Loading when request is in progress */}
 
-      {error && <p>"Looks like we can't find the user"</p>}  {/* Display Error if request fails */}
+      {error && <p>Looks like we can't find the user</p>}  {/* Error message in the correct format */}
 
-      {userData && (  {/* Display user data once successfully fetched */}
+      {userData && (  {/* Display user data when successfully fetched */}
         <div>
-          <img src={userData.avatar_url} alt={userData.login} />  {/* Avatar */}
+          <img src={userData.avatar_url} alt={userData.login} />  {/* User's Avatar */}
           <p>{userData.login}</p>  {/* Username */}
           <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
             View Profile
