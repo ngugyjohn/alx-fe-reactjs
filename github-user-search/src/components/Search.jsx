@@ -40,7 +40,7 @@ const Search = () => {
       {/* Conditional Rendering */}
       {loading && <p>Loading...</p>}  {/* Display Loading when request is being processed */}
 
-      {error && <p>Looks like we can't find the user</p>}  {/* Display Error if request fails */}
+      {error && <p>"Looks like we can't find the user"</p>}  {/* Display Error if request fails */}
 
       {userData && (  {/* Display user data once successfully fetched */}
         <div>
