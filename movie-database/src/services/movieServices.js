@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = 'f7125a73';  // Your OMDB API Key
+const API_KEY = 'f7125a73';  // OMDB API Key
 const BASE_URL = 'https://www.omdbapi.com/';
 
 // Function to search for movies
